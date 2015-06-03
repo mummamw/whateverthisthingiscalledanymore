@@ -51,12 +51,12 @@ CREATE TABLE IF NOT EXISTS `Devoo`.`rss-users` (
   `rss-password` VARCHAR(45) NULL,
   PRIMARY KEY (`username`, `rss-name`),
   INDEX `rss-name_idx` (`rss-name` ASC),
-  CONSTRAINT `username`
+  CONSTRAINT `username-rss-users-fk`
     FOREIGN KEY (`username`)
     REFERENCES `Devoo`.`users` (`username`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `rss-name`
+  CONSTRAINT `rss-name-fk`
     FOREIGN KEY (`rss-name`)
     REFERENCES `Devoo`.`rss-feeds` (`rss-name`)
     ON DELETE NO ACTION
@@ -72,7 +72,18 @@ DROP TABLE IF EXISTS `Devoo`.`friends` ;
 CREATE TABLE IF NOT EXISTS `Devoo`.`friends` (
   `username-1` VARCHAR(45) NOT NULL,
   `username-2` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`username-1`, `username-2`))
+  PRIMARY KEY (`username-1`, `username-2`),
+  INDEX `username-friends-2-fk_idx` (`username-2` ASC),
+  CONSTRAINT `username-friends-1-fk`
+    FOREIGN KEY (`username-1`)
+    REFERENCES `Devoo`.`users` (`username`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `username-friends-2-fk`
+    FOREIGN KEY (`username-2`)
+    REFERENCES `Devoo`.`users` (`username`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -96,7 +107,18 @@ DROP TABLE IF EXISTS `Devoo`.`user-activities` ;
 CREATE TABLE IF NOT EXISTS `Devoo`.`user-activities` (
   `username` VARCHAR(45) NOT NULL,
   `activity-id` INT NOT NULL,
-  PRIMARY KEY (`username`, `activity-id`))
+  PRIMARY KEY (`username`, `activity-id`),
+  INDEX `activity-fk_idx` (`activity-id` ASC),
+  CONSTRAINT `activity--user-activities-fk`
+    FOREIGN KEY (`activity-id`)
+    REFERENCES `Devoo`.`activities` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `username-user-activities-fk`
+    FOREIGN KEY (`username`)
+    REFERENCES `Devoo`.`rss-users` (`username`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -109,7 +131,12 @@ CREATE TABLE IF NOT EXISTS `Devoo`.`user-availability` (
   `username` VARCHAR(45) NOT NULL,
   `time-start` TIME NULL,
   `time-end` TIME NULL,
-  PRIMARY KEY (`username`))
+  PRIMARY KEY (`username`),
+  CONSTRAINT `username-user-availability-fk`
+    FOREIGN KEY (`username`)
+    REFERENCES `Devoo`.`rss-users` (`username`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -136,7 +163,19 @@ CREATE TABLE IF NOT EXISTS `Devoo`.`messages` (
   `time-sent` TIME NULL,
   `from-username` VARCHAR(45) NULL,
   `message` MEDIUMTEXT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  INDEX `conversation-fk_idx` (`conversation-id` ASC),
+  INDEX `username-fk_idx` (`from-username` ASC),
+  CONSTRAINT `conversation-messages-fk`
+    FOREIGN KEY (`conversation-id`)
+    REFERENCES `Devoo`.`conversations` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `username-messages-fk`
+    FOREIGN KEY (`from-username`)
+    REFERENCES `Devoo`.`rss-users` (`username`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -149,7 +188,18 @@ CREATE TABLE IF NOT EXISTS `Devoo`.`messages-participant` (
   `username` VARCHAR(45) NOT NULL,
   `conversation-id` INT NOT NULL,
   `time-read` TIME NULL,
-  PRIMARY KEY (`username`, `conversation-id`))
+  PRIMARY KEY (`username`, `conversation-id`),
+  INDEX `conversations-messages-participant-fk_idx` (`conversation-id` ASC),
+  CONSTRAINT `username-messages-participant-fk`
+    FOREIGN KEY (`username`)
+    REFERENCES `Devoo`.`users` (`username`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `conversations-messages-participant-fk`
+    FOREIGN KEY (`conversation-id`)
+    REFERENCES `Devoo`.`conversations` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
