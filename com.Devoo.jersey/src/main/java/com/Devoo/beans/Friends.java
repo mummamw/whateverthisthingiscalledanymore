@@ -31,5 +31,13 @@ public class Friends {
 		this.username_2 = username_2;
 	}
 	
+	public String returnOtherFriend(String username) {
+		if(username == this.username_1) {
+			return this.username_2;
+		} else {
+			return this.username_1;
+		}
+	}
+	
 	public Friends() {}
 }
