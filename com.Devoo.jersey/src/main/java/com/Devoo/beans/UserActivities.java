@@ -27,4 +27,12 @@ public class UserActivities {
 	}
 	
 	public UserActivities(){}
+	
+	public boolean equals(Object activity) {
+		if(!(activity instanceof UserActivities)) {
+			return false;
+		} else {
+			return ((UserActivities)(activity)).getActivity_id() == this.getActivity_id();
+		}
+	}
 }

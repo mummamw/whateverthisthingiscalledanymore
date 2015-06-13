@@ -14,7 +14,7 @@ public class RSSFeedsConnector extends AbstractConnector {
 	private static RSSFeedsConnector instance;
 
 	private RSSFeedsConnector() {
-		this.table = "rss-feeds";
+		this.table = "`rss-feeds`";
 	}
 
 	public static RSSFeedsConnector getInstance() {

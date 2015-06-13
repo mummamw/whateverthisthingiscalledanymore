@@ -14,7 +14,7 @@ public class UserActivitiesConnector extends AbstractConnector {
 	private static UserActivitiesConnector instance;
 
 	private UserActivitiesConnector() {
-		this.table = "user-activities";
+		this.table = "`user-activities`";
 	}
 
 	public static UserActivitiesConnector getInstance() {

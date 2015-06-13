@@ -14,7 +14,7 @@ public class MessagesParticipantConnector extends AbstractConnector {
 	private static MessagesParticipantConnector instance;
 
 	private MessagesParticipantConnector() {
-		this.table = "messages-participant";
+		this.table = "`messages-participant`";
 	}
 
 	public static MessagesParticipantConnector getInstance() {

@@ -14,7 +14,7 @@ public class UserAvailabilityConnector extends AbstractConnector {
 	private static UserAvailabilityConnector instance;
 
 	private UserAvailabilityConnector() {
-		this.table = "user-availability";
+		this.table = "`user-availability`";
 	}
 
 	public static UserAvailabilityConnector getInstance() {
@@ -30,7 +30,7 @@ public class UserAvailabilityConnector extends AbstractConnector {
 				this.password);
 		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
-		String SQL = "SELECT * FROM " + table + " WHERE `username`='"
+		String SQL = "SELECT * FROM " + table + " WHERE username='"
 				+ username + "'";
 		ResultSet rs = stmt.executeQuery(SQL);
 		while (rs.next()) {
