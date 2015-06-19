@@ -223,6 +223,24 @@ CREATE TABLE IF NOT EXISTS `Devoo`.`data-points` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `Devoo`.`user-roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Devoo`.`user-roles` ;
+
+CREATE TABLE IF NOT EXISTS `Devoo`.`user-roles` (
+  `role-name` ENUM('Admin','User') NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`role-name`, `username`),
+  INDEX `Username-user-roles-fk_idx` (`username` ASC),
+  CONSTRAINT `Username-user-roles-fk`
+    FOREIGN KEY (`username`)
+    REFERENCES `Devoo`.`users` (`username`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

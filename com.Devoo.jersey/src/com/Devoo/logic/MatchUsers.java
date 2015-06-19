@@ -77,14 +77,5 @@ public class MatchUsers {
 		
 		return null;
 	}
-
-	
-	public static void main(String[] args) {
-		MatchUsers mu = new MatchUsers();
-		Users user = new Users();
-		user.setUsername("test_username1");
-		ArrayList<Users> u = mu.findMatchedUsers(user);
-		System.out.println(u.toString());
-	}
 	
 }
