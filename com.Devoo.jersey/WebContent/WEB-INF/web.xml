@@ -26,7 +26,7 @@
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 	
-	<!-- 
+	
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Devoo Protection</web-resource-name>
@@ -53,5 +53,4 @@
 	<security-role>
 		<role-name>User</role-name>
 	</security-role>
-	 -->
 </web-app>

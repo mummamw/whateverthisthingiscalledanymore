@@ -30,6 +30,24 @@ public class UsersConnector extends AbstractConnector {
 				this.password);
 		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
+		String SQL = "SELECT * FROM " + table + " WHERE `username` LIKE '%"
+				+ username + "%'";
+		ResultSet rs = stmt.executeQuery(SQL);
+		while (rs.next()) {
+			users.add(createUser(rs));
+		}
+		rs.close();
+		stmt.close();
+		con.close();
+		return users;
+	}
+	
+	public ArrayList<Users> getExactUser(String username) throws SQLException {
+		ArrayList<Users> users = new ArrayList<Users>();
+		Connection con = DriverManager.getConnection(this.host, this.username,
+				this.password);
+		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
 		String SQL = "SELECT * FROM " + table + " WHERE `username`='"
 				+ username + "'";
 		ResultSet rs = stmt.executeQuery(SQL);

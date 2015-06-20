@@ -24,14 +24,14 @@ public class MessagesConnector extends AbstractConnector {
 		return instance;
 	}
 
-	public ArrayList<Messages> getMessages(Messages message) throws SQLException {
+	public ArrayList<Messages> getMessages(int id) throws SQLException {
 		ArrayList<Messages> messages = new ArrayList<Messages>();
 		Connection con = DriverManager.getConnection(this.host, this.username,
 				this.password);
 		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		String SQL = "SELECT * FROM " + table + " WHERE `id`="
-				+ message.getId();
+				+ id;
 		ResultSet rs = stmt.executeQuery(SQL);
 		while (rs.next()) {
 			messages.add(createMessages(rs));
