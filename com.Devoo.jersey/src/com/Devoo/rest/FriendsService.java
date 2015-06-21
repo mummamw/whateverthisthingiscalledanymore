@@ -56,11 +56,10 @@ public class FriendsService extends Application {
 	
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/deleteFriend")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteFriend(Friends friend) {
+	@Path("/{username1}&{username2}")
+	public Response deleteFriend(@PathParam("username1") String username1, @PathParam("username2") String username2) {
 		try {
-			friendsTable.deleteFriend(friend);
+			friendsTable.deleteFriend(new Friends(username1, username2));
 			return Response.status(200).build();
 		} catch (SQLException e) {
 			e.printStackTrace();

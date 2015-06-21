@@ -55,11 +55,11 @@ public class MessagesParticipantService extends Application {
 
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/deleteMessagesParticipant")
+	@Path("/{username}&{conversation_id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteMessagesParticipant(MessagesParticipant messagesParticipant) {
+	public Response deleteMessagesParticipant(@PathParam("username") String username, @PathParam("conversation_id") int conversation_id) {
 		try {
-			messageParticipant.deleteMessagesParticipant(messagesParticipant);
+			messageParticipant.deleteMessagesParticipant(new MessagesParticipant(username, conversation_id, null));
 			return Response.status(200).build();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -30,7 +30,7 @@ public class MessagesService extends Application {
 	public Response getMessages(@PathParam("conversationID") int conversationID) {
 		ArrayList<Messages> messages;
 		try {
-			messages = messagesConnector.getMessages(conversationID);
+			messages = messagesConnector.getMessagesByConversation(conversationID);
 			return Response.status(200).entity(messages).build();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -57,11 +57,13 @@ public class MessagesService extends Application {
 
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/deleteMessages")
+	@Path("/deleteMessages/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteMessages(Messages messages) {
+	public Response deleteMessages(@PathParam("id") int id) {
 		try {
-			messagesConnector.deleteMessages(messages);
+			Messages message = new Messages();
+			message.setId(id);
+			messagesConnector.deleteMessages(message);
 			return Response.status(200).build();
 		} catch (SQLException e) {
 			e.printStackTrace();

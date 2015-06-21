@@ -39,12 +39,12 @@ public class UsersService extends Application {
 	}
 
 	@POST
-	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/addUser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUser(Users user) {
 		try {
 			usersTable.addUsers(user);
+			UserRolesConnector.getInstance().addUsersRole(new UserRoles("User", user.getUsername()));
 			return Response.status(200).build();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -54,12 +54,13 @@ public class UsersService extends Application {
 	}
 
 	@DELETE
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/deleteUser")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deleteUser(Users user) {
+	@Path("/deleteUser/{username}")
+	public Response deleteUser(@PathParam("username") String username) {
 		try {
-			usersTable.deleteUser(user);
+			Users u = new Users();
+			u.setUsername(username);
+			UserRolesConnector.getInstance().deleteUsersRole(new UserRoles("User", username));
+			usersTable.deleteUser(u);
 			return Response.status(200).build();
 		} catch (SQLException e) {
 			e.printStackTrace();
