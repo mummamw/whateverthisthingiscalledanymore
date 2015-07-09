@@ -75,6 +75,24 @@ public class UserActivitiesConnector extends AbstractConnector {
 		stmt.close();
 		con.close();
 	}
+	
+	public void deleteUserActivitiesByUser(String username) throws SQLException {
+		Connection con = DriverManager.getConnection(this.host, this.username,
+				this.password);
+		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_UPDATABLE);
+		String SQL = "SELECT * FROM " + table + " WHERE username='"
+				+ username + "'";
+		ResultSet rs = stmt.executeQuery(SQL);
+		if (rs.next()) {
+			rs.deleteRow();
+		} else {
+			throw new SQLException("No user activities with that username exist!");
+		}
+		rs.close();
+		stmt.close();
+		con.close();
+	}
 
 	public void updateUserActivities(UserActivities userActivities) throws SQLException {
 		Connection con = DriverManager.getConnection(this.host, this.username,

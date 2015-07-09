@@ -41,6 +41,23 @@ public class UserAvailabilityConnector extends AbstractConnector {
 		con.close();
 		return userAvailability;
 	}
+	
+	public ArrayList<UserAvailability> getAllUserAvailability() throws SQLException {
+		ArrayList<UserAvailability> userAvailability = new ArrayList<UserAvailability>();
+		Connection con = DriverManager.getConnection(this.host, this.username,
+				this.password);
+		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		String SQL = "SELECT * FROM " + table;
+		ResultSet rs = stmt.executeQuery(SQL);
+		while (rs.next()) {
+			userAvailability.add(createUserAvailability(rs));
+		}
+		rs.close();
+		stmt.close();
+		con.close();
+		return userAvailability;
+	}
 
 	public void addUserAvailability(UserAvailability userAvailability) throws SQLException {
 		Connection con = DriverManager.getConnection(this.host, this.username,

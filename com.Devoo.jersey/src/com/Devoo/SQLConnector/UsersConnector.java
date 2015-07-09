@@ -30,7 +30,7 @@ public class UsersConnector extends AbstractConnector {
 				this.password);
 		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
-		String SQL = "SELECT * FROM " + table + " WHERE `username` LIKE '%"
+		String SQL = "SELECT username, `first-name`, `last-name`, `picture-url` FROM " + table + " WHERE `username` LIKE '%"
 				+ username + "%'";
 		ResultSet rs = stmt.executeQuery(SQL);
 		while (rs.next()) {
